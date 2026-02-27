@@ -44,13 +44,13 @@ const popAudio = document.getElementById('pop-audio');
 try {
     bgmAudio.volume = 0.5;
     popAudio.volume = 0.8;
-} catch(e) {}
+} catch (e) { }
 
 // State
 let myRole = null;
 let myName = '';
 let isCountdownActive = false;
-const MAX_SCORE = 100;
+const MAX_SCORE = 200;
 
 // Utility functions
 function switchScreen(screenName) {
@@ -124,7 +124,7 @@ function handleTap(e) {
         const popClone = popAudio.cloneNode();
         popClone.volume = popAudio.volume;
         popClone.play().catch(e => console.log('Audio overlap restricted:', e));
-    } catch(e) {}
+    } catch (e) { }
 
     // Send the tap to the server
     socket.emit('tap');
@@ -237,7 +237,7 @@ socket.on('game-started', () => {
         try {
             bgmAudio.currentTime = 0;
             bgmAudio.play().catch(err => console.log('Audio playback blocked pending user interaction', err));
-        } catch(e) {}
+        } catch (e) { }
 
         let count = 3;
         countdownNumber.innerText = count;
@@ -301,7 +301,7 @@ function uiStateToWaiting() {
         try {
             bgmAudio.pause();
             bgmAudio.currentTime = 0;
-        } catch(e) {}
+        } catch (e) { }
     }
 
     if (myRole === 'player') {
@@ -313,7 +313,7 @@ function uiStateToWaiting() {
         try {
             bgmAudio.pause();
             bgmAudio.currentTime = 0;
-        } catch(e) {}
+        } catch (e) { }
     }
 }
 
@@ -345,14 +345,14 @@ function uiStateToFinished(winner, roomName) {
         gmWinnerAnnouncement.classList.remove('hidden');
         gmWinnerText.innerText = `${winner} (memenangkan ${finalRoomName})`;
 
-        try { bgmAudio.pause(); } catch(e) {}
+        try { bgmAudio.pause(); } catch (e) { }
     }
 
     if (myRole === 'player') {
         playerGameStatus.innerText = 'Status: Game Over';
         overlayFinished.classList.remove('hidden');
         winnerNameText.innerText = winner;
-        
+
         if (resultRoomName && resultTitle) {
             if (myName === winner) {
                 resultTitle.innerText = "🎉 SELAMAT! 🎉";
@@ -367,7 +367,7 @@ function uiStateToFinished(winner, roomName) {
             }
         }
 
-        try { bgmAudio.pause(); } catch(e) {}
+        try { bgmAudio.pause(); } catch (e) { }
     }
 
     // Play confetti for both GM and Player view when someone wins
