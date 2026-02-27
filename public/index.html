@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Gentak Tap Tap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script defer src="app.js"></script>
+</head>
+
+<body>
+    <audio id="bgm-audio" src="bgm.mp3" loop preload="auto"></audio>
+    <audio id="pop-audio" src="pop.mp3" preload="auto"></audio>
+    <div id="particles"></div>
+
+    <!-- Login / Role Selection Screen -->
+    <div id="login-screen" class="screen active">
+        <div class="glass-card fade-in">
+            <div class="logo-container">
+                <span class="icon">⚡</span>
+                <h1>Gentak Tap Tap</h1>
+            </div>
+            <p class="subtitle">First to 100 taps wins the prize!</p>
+
+            <div class="input-group">
+                <input type="text" id="player-name" placeholder="Enter your nickname..." autocomplete="off">
+            </div>
+
+            <div class="button-group">
+                <button id="btn-join-player" class="btn primary wave-effect">Join as Player</button>
+                <div class="divider"><span>OR</span></div>
+                <button id="btn-join-gm" class="btn secondary outline">Login as Game Master</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Master Dashboard -->
+    <div id="gm-screen" class="screen">
+        <div class="dashboard fade-in">
+            <header class="gm-header">
+                <h2>👑 Game Master Control Panel</h2>
+                <div class="status-badge waiting" id="gm-game-status">Status: Waiting</div>
+            </header>
+
+            <div class="controls-panel">
+                <input type="text" id="gm-room-name" class="room-input" placeholder="Tulis Nama Gameroom..." value="Tap Tap Championship">
+                <button id="btn-start" class="btn gm-btn start" disabled>Start Race</button>
+                <button id="btn-reset" class="btn gm-btn reset">Reset Game</button>
+                <button id="btn-close-room" class="btn gm-btn close">Close Room</button>
+            </div>
+
+            <div class="players-grid" id="gm-players-list">
+                <!-- Player cards will be injected here -->
+            </div>
+            <div id="gm-winner-announcement" class="winner-announcement hidden">
+                <h2 class="winner-text">🎉 Winner: <span></span> 🎉</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Screen -->
+    <div id="player-screen" class="screen">
+        <header class="player-header fade-in">
+            <div class="player-info">
+                <span class="avatar">🎮</span>
+                <span id="display-name">Player Name</span>
+            </div>
+            <div class="global-status" id="player-game-status">Waiting for Game Master...</div>
+        </header>
+
+        <main class="game-area">
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="my-progress" style="width: 0%"></div>
+                    <span class="score-text" id="my-score">0 / 100</span>
+                </div>
+            </div>
+
+            <div class="tap-zone" id="tap-button">
+                <div class="tap-circle ripple-enabled">
+                    <span class="tap-text">TAP!</span>
+                </div>
+            </div>
+
+            <!-- Overlays -->
+            <div id="overlay-waiting" class="overlay active">
+                <div class="overlay-content bounce">
+                    <h3>Waiting for Game Master</h3>
+                    <p>Get your fingers ready...</p>
+                    <div class="spinner"></div>
+                </div>
+            </div>
+
+            <div id="overlay-countdown" class="overlay hidden">
+                <div class="countdown-text" id="countdown-number">3</div>
+            </div>
+
+            <div id="overlay-finished" class="overlay hidden">
+                <div class="overlay-content winner-card zoom-in">
+                    <h1 id="result-title">Game Over!</h1>
+                    <h2 id="result-room-name" style="margin-bottom: 0.5rem; font-size: 1.5rem; color: var(--accent);"></h2>
+                    <h3 id="result-subtitle">Pemenang: <span id="winner-name-text"></span></h3>
+                    <p>Menunggu ronde berikutnya...</p>
+                </div>
+            </div>
+
+        </main>
+
+        <aside class="leaderboard-sidebar">
+            <h3>Live Leaderboard</h3>
+            <ul class="leaderboard-list" id="player-leaderboard">
+                <!-- Mini leaderboard items injected here -->
+            </ul>
+        </aside>
+    </div>
+
+</body>
+
+</html>
