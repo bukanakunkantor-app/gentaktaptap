@@ -168,14 +168,32 @@ btnCloseRoom.addEventListener('click', () => {
 });
 
 // Event Listeners for Player
-// Handle click and touchstart to prevent delay on mobile
+const tapCircleElement = tapButton ? tapButton.querySelector('.tap-circle') : null;
+
+function addPress() {
+    if (tapCircleElement && !isCountdownActive) tapCircleElement.classList.add('pressed');
+}
+
+function removePress() {
+    if (tapCircleElement) tapCircleElement.classList.remove('pressed');
+}
+
 tapButton.addEventListener('mousedown', (e) => {
-    if (!e.touches) handleTap(e);
+    if (!e.touches) {
+        addPress();
+        handleTap(e);
+    }
 });
+tapButton.addEventListener('mouseup', removePress);
+tapButton.addEventListener('mouseleave', removePress);
+
 tapButton.addEventListener('touchstart', (e) => {
     e.preventDefault(); // prevent mouse event emulation
+    addPress();
     handleTap(e);
 });
+tapButton.addEventListener('touchend', removePress);
+tapButton.addEventListener('touchcancel', removePress);
 
 // Server Event Handlers
 socket.on('update-players', (players) => {

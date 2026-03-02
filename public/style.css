@@ -469,7 +469,8 @@ body {
     overflow: hidden;
 }
 
-.tap-circle:active {
+.tap-circle:active,
+.tap-circle.pressed {
     transform: scale(0.85) translateY(10px);
     box-shadow:
         0 5px 15px rgba(139, 92, 246, 0.4),
