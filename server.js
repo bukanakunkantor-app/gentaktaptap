@@ -19,7 +19,7 @@ let players = {};
 let winner = null;
 let roomName = 'Tap Tap Championship';
 
-const WINNING_SCORE = 100;
+const WINNING_SCORE = 200;
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
@@ -46,9 +46,9 @@ io.on('connection', (socket) => {
       gameState = 'countdown';
       winner = null;
       if (data && data.roomName) {
-          roomName = data.roomName;
+        roomName = data.roomName;
       }
-      
+
       // Reset scores
       for (let id in players) {
         players[id].score = 0;
@@ -57,13 +57,13 @@ io.on('connection', (socket) => {
       io.emit('update-players', Object.values(players));
       io.emit('game-started');
       console.log('Game countdown started');
-      
+
       // Wait for the 3-2-1 GO frontend animation before counting taps
       setTimeout(() => {
-          if (gameState === 'countdown') {
-              gameState = 'playing';
-              console.log('Game playing now');
-          }
+        if (gameState === 'countdown') {
+          gameState = 'playing';
+          console.log('Game playing now');
+        }
       }, 3200);
     }
   });
@@ -100,11 +100,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('close-room', () => {
-      gameState = 'waiting';
-      winner = null;
-      players = {};
-      io.emit('room-closed');
-      console.log('Room closed by GM. All players kicked.');
+    gameState = 'waiting';
+    winner = null;
+    players = {};
+    io.emit('room-closed');
+    console.log('Room closed by GM. All players kicked.');
   });
 
   socket.on('disconnect', () => {
