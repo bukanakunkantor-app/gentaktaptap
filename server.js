@@ -19,7 +19,7 @@ let players = {};
 let winner = null;
 let roomName = 'Tap Tap Championship';
 
-const WINNING_SCORE = 200;
+const WINNING_SCORE = 120;
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
