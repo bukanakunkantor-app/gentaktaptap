@@ -50,7 +50,7 @@ try {
 let myRole = null;
 let myName = '';
 let isCountdownActive = false;
-const MAX_SCORE = 200;
+const MAX_SCORE = 120;
 
 // Utility functions
 function switchScreen(screenName) {
